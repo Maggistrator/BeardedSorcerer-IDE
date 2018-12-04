@@ -1,5 +1,6 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -7,9 +8,13 @@ import java.awt.HeadlessException;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import ui.workspace.ProjectTree;
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import ui.workspace.NavigationPanel;
 import ui.workspace.Toolbar;
 import ui.workspace.WorkingArea;
 
@@ -19,9 +24,9 @@ import ui.workspace.WorkingArea;
  */
 public class ApplicationFrame extends JFrame{
 
-    Toolbar toolbar = new Toolbar();
+
     WorkingArea workingArea = new WorkingArea();
-    ProjectTree projectTree = new ProjectTree();
+    NavigationPanel projectTree = new NavigationPanel();
     
     GridBagLayout advancedLayout = new GridBagLayout();
 
@@ -32,29 +37,21 @@ public class ApplicationFrame extends JFrame{
         pane.setDividerSize(8);
         pane.setDividerLocation(120);
         pane.setLeftComponent(new JScrollPane(projectTree));
-        pane.setRightComponent(workingArea);
+        pane.setRightComponent(new JScrollPane(workingArea));
+
+//TODO:починить юзербар с flawlayout
         
-        GridBagConstraints toolbarConstraints = new GridBagConstraints();
-        toolbarConstraints.gridx = 0;
-        toolbarConstraints.gridy = 0;
-        toolbarConstraints.anchor = GridBagConstraints.NORTHWEST;
-        toolbarConstraints.fill = GridBagConstraints.BOTH;
-        toolbarConstraints.weightx = 1.0f;
-        toolbarConstraints.weighty = 0.03f;
-        advancedLayout.addLayoutComponent(toolbar, toolbarConstraints);
-        
-        GridBagConstraints workingAreaConstraints = new GridBagConstraints();
-        workingAreaConstraints.gridx = 0;
-        workingAreaConstraints.gridy = 1;
-        workingAreaConstraints.anchor = GridBagConstraints.NORTHWEST;
-        workingAreaConstraints.fill = GridBagConstraints.BOTH;
-        workingAreaConstraints.weightx = 0.75f;
-        workingAreaConstraints.weighty = 0.97f;
-        workingAreaConstraints.gridwidth = 2;
-        workingAreaConstraints.insets = new Insets(0, 0, 0, 2);
-        advancedLayout.addLayoutComponent(pane, workingAreaConstraints);
-        
-        add(toolbar);
+        GridBagConstraints splitPaneConstrains = new GridBagConstraints();
+        splitPaneConstrains.gridx = 0;
+        splitPaneConstrains.gridy = 1;
+        splitPaneConstrains.anchor = GridBagConstraints.NORTHWEST;
+        splitPaneConstrains.fill = GridBagConstraints.BOTH;
+        splitPaneConstrains.weightx = 0.75f;
+        splitPaneConstrains.weighty = 0.97f;
+        splitPaneConstrains.gridwidth = 3;
+        splitPaneConstrains.insets = new Insets(0, 0, 0, 2);
+        advancedLayout.addLayoutComponent(pane, splitPaneConstrains);
+
         add(pane);
         
         setLayout(advancedLayout);

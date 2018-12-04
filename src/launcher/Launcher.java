@@ -1,7 +1,6 @@
 package launcher;
 
 import com.alee.laf.WebLookAndFeel;
-import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
 import java.awt.EventQueue;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
