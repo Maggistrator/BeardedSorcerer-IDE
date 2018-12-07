@@ -1,6 +1,6 @@
 package ui;
 
-import java.awt.Color;
+import ui.navigation.NavigationPanel;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,15 +8,11 @@ import java.awt.HeadlessException;
 import java.awt.Insets;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.SwingConstants;
-import javax.swing.border.LineBorder;
-import ui.workspace.NavigationPanel;
-import ui.workspace.Toolbar;
-import ui.workspace.WorkingArea;
+import javax.swing.JTextArea;
+import javax.swing.JTree;
+import logic.FileManager;
 
 /**
  * Основное окно программы. 
@@ -24,22 +20,24 @@ import ui.workspace.WorkingArea;
  */
 public class ApplicationFrame extends JFrame{
 
-
     WorkingArea workingArea = new WorkingArea();
-    NavigationPanel projectTree = new NavigationPanel();
+    NavigationPanel navigationPanel = new NavigationPanel();
     
     GridBagLayout advancedLayout = new GridBagLayout();
 
     public ApplicationFrame() throws HeadlessException {
         super("BeardedSorcerer IDE");
-
+        initalizeProgrammData();
+        workingArea.init(this);
+        navigationPanel.init(this);
+        
         JSplitPane pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
         pane.setDividerSize(8);
         pane.setDividerLocation(120);
-        pane.setLeftComponent(new JScrollPane(projectTree));
+        pane.setLeftComponent(new JScrollPane(navigationPanel));
         pane.setRightComponent(new JScrollPane(workingArea));
 
-//TODO:починить юзербар с flawlayout
+        //TODO:починить юзербар с flawlayout
         
         GridBagConstraints splitPaneConstrains = new GridBagConstraints();
         splitPaneConstrains.gridx = 0;
@@ -51,16 +49,27 @@ public class ApplicationFrame extends JFrame{
         splitPaneConstrains.gridwidth = 3;
         splitPaneConstrains.insets = new Insets(0, 0, 0, 2);
         advancedLayout.addLayoutComponent(pane, splitPaneConstrains);
-
         add(pane);
         
         setLayout(advancedLayout);
-        setPreferredSize(new Dimension(640, 480));
+        setPreferredSize(new Dimension(800, 600));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setIconImage(new ImageIcon("sys/magic.png").getImage());
         pack();
         
         setLocationRelativeTo(null);
     }
+
+    public JTree getNavigationTree(){
+        return navigationPanel.getNavigationTree();
+    }
     
+    public JTextArea getTextArea(){
+        return workingArea.getTextArea();
+    }
+    
+    private void initalizeProgrammData(){
+        FileManager.createFile("MyClass", true, "temp");
+        System.out.println("Manager called");
+    }    
 }

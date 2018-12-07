@@ -1,4 +1,4 @@
-package ui.workspace;
+package ui.navigation;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -7,6 +7,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import logic.workspace.navigation.TreeViewListener;
+import ui.ApplicationFrame;
 
 /**
  * Панель навигации
@@ -14,16 +18,34 @@ import javax.swing.SwingConstants;
  * @author Сова
  */
 public class NavigationPanel extends JPanel{
+    
     JTree tree = new JTree();
     JLabel projectLabel = new JLabel("Project");
+    NavigationOptionsList navList;
+    
+    DefaultMutableTreeNode lastEditedFileNode; 
 
-    public NavigationPanel() {
+    public void init(ApplicationFrame main) {
         initalizeHeader();
         initalizeLayout();
-        tree.setPreferredSize(new Dimension(100, 350));
+        setNodes(tree); 
+        
+        navList = new NavigationOptionsList(main.getTextArea(), this);
+        
         add(projectLabel);
         add(tree);
         setFocusable(false);
+        
+        tree.setPreferredSize(new Dimension(100, 350));
+        tree.addMouseListener(new TreeViewListener(navList));
+    }
+    
+    public DefaultMutableTreeNode getLastEditedFileNode(){
+        return lastEditedFileNode;
+    }
+    
+    public JTree getNavigationTree() {
+        return tree;
     }
     
     /**
@@ -54,4 +76,18 @@ public class NavigationPanel extends JPanel{
         
         advancedLayout.addLayoutComponent(tree, treeConstrains);
     }
+    
+    private void setNodes(JTree tree) {
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Project");
+        DefaultMutableTreeNode defaultPackage = new DefaultMutableTreeNode("default");
+        DefaultMutableTreeNode defaultClass = new DefaultMutableTreeNode("MyClass");
+
+        lastEditedFileNode = defaultClass;
+        root.add(defaultPackage);
+        defaultPackage.add(defaultClass);
+
+        tree.setModel(new DefaultTreeModel(root));
+    }
+
+    
 }
