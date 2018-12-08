@@ -1,7 +1,6 @@
 package launcher;
 
 import com.alee.laf.WebLookAndFeel;
-import java.awt.EventQueue;
 import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -9,27 +8,28 @@ import javax.swing.UnsupportedLookAndFeelException;
 import ui.ApplicationFrame;
 
 /**
+ * Точка входа в программу.
+ * Устанавливает внешний вид компонентов, и запускает основное окно.
  * @author Сова
  */
 public class Launcher {
+
     public static void main(String[] args) {
         try {
-        setLaf();
-        EventQueue.invokeLater(() -> {
+            setLaf();
             new ApplicationFrame().setVisible(true);
-        });
         } catch (HeadlessException ex) {
             System.err.println("programm crushed :/");
         }
     }
-    
+
     private static void setLaf() {
         //<editor-fold defaultstate="collapsed" desc="настройка Look and Feel">
         try {
             WebLookAndFeel webLaF = new WebLookAndFeel();
             UIManager.setLookAndFeel(webLaF);
-//            UIManager.setLookAndFeel(new WindowsLookAndFeel());
-//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            //UIManager.setLookAndFeel(new WindowsLookAndFeel());
+            //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (UnsupportedLookAndFeelException ex) {
             JOptionPane.showMessageDialog(null, "Оформление окна отвалилось.. Причина: \n" + ex.getMessage());
         }

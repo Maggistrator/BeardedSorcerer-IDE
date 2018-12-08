@@ -1,4 +1,4 @@
-package logic.workspace.navigation;
+package logic.workspace.toolbar;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,7 +26,7 @@ public class SaveButtonListener implements ActionListener{
         DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) navigation.getLastEditedFileNode(); 
    
         String filename = (String) selectedNode.getUserObject();
-        EnchancedWriter.SaveFile(filename, dataSource.getText());
+        new EnchancedWriter().SaveFile(filename, dataSource.getText());
         
         System.out.println("Listener called with filename = "+filename+" and data="+dataSource.getText());
     }

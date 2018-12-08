@@ -12,13 +12,13 @@ import javax.swing.JOptionPane;
  */
 public class EnchancedWriter {
 
-    public static void SaveFile(String alias, String data) {
-        File file = FileManager.getFile(alias);
+    public void SaveFile(String alias, String data) {
+        File file = FileManagerSingleton.getInstance().getFile(alias);
         System.out.println("SaveFile called, now file = "+file+" and data="+data);
         SaveFile(file, data);
     }
 
-    public static void SaveFile(File file, String data) {
+    public void SaveFile(File file, String data) {
         try {
             FileWriter fw = new FileWriter(file.getAbsoluteFile());
             BufferedWriter bw = new BufferedWriter(fw);
@@ -32,7 +32,7 @@ public class EnchancedWriter {
         }
     }
 
-    public static void SaveProject(File rootDirectory) {
+    public void SaveProject(File rootDirectory) {
 
     }
 

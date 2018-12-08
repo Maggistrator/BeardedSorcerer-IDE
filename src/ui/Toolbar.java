@@ -8,7 +8,8 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTree;
-import logic.workspace.navigation.SaveButtonListener;
+import logic.workspace.toolbar.CompileButtonListener;
+import logic.workspace.toolbar.SaveButtonListener;
 import ui.navigation.NavigationPanel;
 /**
  * Панель инструментов.
@@ -43,6 +44,7 @@ public class Toolbar extends JPanel{
         add(run);
         
         save.addActionListener(new SaveButtonListener(textArea, navigation));
+        compile.addActionListener(new CompileButtonListener(textArea, navigation));
         
         setPreferredSize(new Dimension(630, 20));
         setMinimumSize(new Dimension(30, 30));

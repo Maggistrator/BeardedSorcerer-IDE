@@ -26,7 +26,7 @@ public class PopupSaveListener extends MouseAdapter{
         DefaultMutableTreeNode selectedNode = navigation.getLastEditedFileNode(); 
    
         String filename = (String) selectedNode.getUserObject();
-        EnchancedWriter.SaveFile(filename, dataSource.getText());
+        new EnchancedWriter().SaveFile(filename, dataSource.getText());
         
         System.out.println("Listener called with filename = "+filename+" and data="+dataSource.getText());
     }

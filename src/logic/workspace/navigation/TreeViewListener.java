@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
-import logic.FileManager;
+import logic.FileManagerSingleton;
 import ui.navigation.NavigationOptionsList;
 
 /**
@@ -36,7 +36,7 @@ public class TreeViewListener extends MouseAdapter {
             }
 
             if(selected.isLeaf()){
-                if(FileManager.isTemporary((String) selected.getUserObject())){
+                if(FileManagerSingleton.getInstance().isTemporary((String) selected.getUserObject())){
                     navList.setTempFileKit();
                 }else{
                     navList.setResidentFileKit();
